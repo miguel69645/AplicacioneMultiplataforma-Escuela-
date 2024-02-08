@@ -1,4 +1,4 @@
-# dam_u1_ejercicio1
+# Ejercicios
 
 A new Flutter project.
 
