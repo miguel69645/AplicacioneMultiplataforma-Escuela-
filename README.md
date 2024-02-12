@@ -1,4 +1,4 @@
-# dam_u1_ejercicio1
+# Es un repositorio de todos los ejercicios de la materia 
 
 A new Flutter project.
 
