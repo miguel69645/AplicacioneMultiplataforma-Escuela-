@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, camel_case_types, sort_child_properties_last
 
 import 'package:flutter/material.dart';
 
@@ -9,10 +9,24 @@ class App06 extends StatefulWidget {
   State<App06> createState() => _App06State();
 }
 
+enum titulacion { ceneval, residencia, tesis }
+
+List carrera = [
+  "Sistemas Computacionales",
+  "Bioquimica",
+  "Quimica",
+  "Civil",
+  "Arquitectura",
+  "Gestion Empresarial",
+  "Mecatronica"
+];
+
 class _App06State extends State<App06> {
   bool algo = true;
   var nombre = TextEditingController();
   bool algo2 = false;
+  titulacion grupo = titulacion.ceneval;
+  String itemseleccionado = carrera.first;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +68,17 @@ class _App06State extends State<App06> {
             SizedBox(height: 10),
             TextButton(onPressed: () {}, child: Text('OK')),
             SizedBox(height: 10),
-            IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+            IconButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Hola como estas?"),
+                    action: SnackBarAction(
+                      label: "OK",
+                      onPressed: () {},
+                    ),
+                  ));
+                },
+                icon: Icon(Icons.delete)),
             SizedBox(height: 10),
             CheckboxListTile(
               title: Text('Aceptar'),
@@ -65,11 +89,79 @@ class _App06State extends State<App06> {
                 });
               },
             ),
+            RadioListTile(
+              title: Text('CENEVAL'),
+              value: titulacion.ceneval,
+              groupValue: grupo,
+              onChanged: (data) {
+                setState(() {
+                  grupo = data!;
+                });
+              },
+            ),
+            RadioListTile(
+              title: Text('RESIDENCIA'),
+              value: titulacion.residencia,
+              groupValue: grupo,
+              onChanged: (data) {
+                setState(() {
+                  grupo = data!;
+                });
+              },
+            ),
+            RadioListTile(
+              title: Text('TESIS'),
+              value: titulacion.tesis,
+              groupValue: grupo,
+              onChanged: (data) {
+                setState(() {
+                  grupo = data!;
+                });
+              },
+            ),
+            SizedBox(height: 10),
+            DropdownButtonFormField(
+              value: itemseleccionado,
+              items: carrera.map((e) {
+                return DropdownMenuItem(
+                  child: Text(e),
+                  value: e,
+                );
+              }).toList(),
+              onChanged: (data) {
+                setState(() {
+                  itemseleccionado = data.toString();
+                });
+              },
+            ),
           ],
         ),
       ),
-      floatingActionButton:
-          FloatingActionButton(onPressed: () {}, child: Text('OK')),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('ATENCION'),
+                  content: Text('Mensaje del dialogo'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("OK"),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text("Cancelar"),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+          child: Text('OK')),
     );
   }
 }
